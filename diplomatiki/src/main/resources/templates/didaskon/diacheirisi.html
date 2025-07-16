@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="el">
+        <head>
+        <meta charset="UTF-8">
+        <title>Διαχείριση Διπλωματικών Εργασιών</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+
+<div class="max-w-5xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6 text-center">🔧 Διαχείριση Διπλωματικών Εργασιών</h1>
+
+    <!-- Λίστα Διπλωματικών Εργασιών -->
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Διπλωματικές Εργασίες - Κατάσταση</h2>
+        <table class="min-w-full bg-white border border-gray-300 rounded-md shadow-md">
+            <thead>
+            <tr>
+                <th class="px-6 py-3 border-b">Θέμα Διπλωματικής</th>
+                <th class="px-6 py-3 border-b">Κατάσταση</th>
+                <th class="px-6 py-3 border-b">Περισσότερα</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Παράδειγμα Εγγραφής Διπλωματικής -->
+            <tr>
+                <td class="px-6 py-4 border-b">Ανάπτυξη Εφαρμογής Ιστοσελίδας</td>
+                <td class="px-6 py-4 border-b text-yellow-500">Υπό Ανάθεση</td>
+                <td class="px-6 py-4 border-b">
+                    <button class="text-blue-600" onclick="viewDiplomaDetails(1)">Προβολή</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="px-6 py-4 border-b">Ανάλυση Δεδομένων για Επιχειρηματική Ευφυΐα</td>
+                <td class="px-6 py-4 border-b text-green-500">Ενεργή</td>
+                <td class="px-6 py-4 border-b">
+                    <button class="text-blue-600" onclick="viewDiplomaDetails(2)">Προβολή</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Διαχείριση Σημειώσεων -->
+    <div id="notes-section" class="mb-8 hidden">
+        <h2 class="text-xl font-semibold mb-4">Σημειώσεις Διδάσκοντα</h2>
+        <textarea id="note-input" class="w-full p-4 border border-gray-300 rounded-md" rows="3" placeholder="Καταχωρήστε τη σημείωση εδώ (έως 300 χαρακτήρες)"></textarea>
+        <button onclick="saveNote()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-md">Αποθήκευση Σημείωσης</button>
+    </div>
+
+    <!-- Ακύρωση Ανάθεσης -->
+    <div id="cancel-assignment-section" class="mb-8 hidden">
+        <h2 class="text-xl font-semibold mb-4">Ακύρωση Ανάθεσης Θέματος</h2>
+        <input id="cancellation-reason" type="text" class="w-full p-4 border border-gray-300 rounded-md mb-4" placeholder="Καταχωρήστε τον λόγο ακύρωσης...">
+        <button onclick="cancelAssignment()" class="mt-4 bg-red-600 text-white px-6 py-2 rounded-md">Ακύρωση Ανάθεσης</button>
+    </div>
+
+    <!-- Καταχώρηση Βαθμού -->
+    <div id="grade-section" class="mb-8 hidden">
+        <h2 class="text-xl font-semibold mb-4">Καταχώρηση Βαθμού</h2>
+        <input id="grade-input" type="number" min="0" max="10" class="w-1/4 p-4 border border-gray-300 rounded-md" placeholder="Βαθμός">
+        <button onclick="submitGrade()" class="mt-4 bg-green-600 text-white px-6 py-2 rounded-md">Υποβολή Βαθμού</button>
+    </div>
+</div>
+
+<script>
+    // Συνάρτηση για την εμφάνιση των λεπτομερειών της Διπλωματικής
+    function viewDiplomaDetails(diplomaId) {
+      // Εδώ φορτώνονται τα δεδομένα της Διπλωματικής από την βάση δεδομένων ή API
+      console.log("Προβολή λεπτομερειών Διπλωματικής με ID:", diplomaId);
+
+      // Ανάλογα με την κατάσταση της διπλωματικής, εμφανίζονται οι αντίστοιχες ενέργειες
+      if (diplomaId === 1) {
+        document.getElementById('notes-section').classList.remove('hidden');
+        document.getElementById('cancel-assignment-section').classList.remove('hidden');
+      } else if (diplomaId === 2) {
+        document.getElementById('grade-section').classList.remove('hidden');
+      }
+    }
+
+    // Συνάρτηση για αποθήκευση σημείωσης
+    function saveNote() {
+      const note = document.getElementById('note-input').value;
+      if (note.length > 300) {
+        alert("Η σημείωση δεν μπορεί να ξεπερνά τους 300 χαρακτήρες.");
+      } else {
+        console.log("Αποθήκευση σημείωσης:", note);
+        // Εδώ η σημείωση αποθηκεύεται στην βάση ή αποστέλλεται στο server
+      }
+    }
+
+    // Συνάρτηση για ακύρωση ανάθεσης
+    function cancelAssignment() {
+      const reason = document.getElementById('cancellation-reason').value;
+      console.log("Ακύρωση ανάθεσης λόγω:", reason);
+      // Εδώ καταχωρείται η ακύρωση στην βάση ή αποστέλλεται στο server
+    }
+
+    // Συνάρτηση για καταχώρηση βαθμού
+    function submitGrade() {
+      const grade = document.getElementById('grade-input').value;
+      console.log("Καταχώρηση βαθμού:", grade);
+      // Εδώ καταχωρείται ο βαθμός στην βάση ή αποστέλλεται στο server
+    }
+</script>
+
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>

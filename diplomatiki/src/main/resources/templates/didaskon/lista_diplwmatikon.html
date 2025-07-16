@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Λίστα Διπλωματικών - Διδάσκων</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+
+<div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6 text-center">📚 Λίστα Διπλωματικών Εργασιών</h1>
+
+    <!-- Φίλτρα -->
+    <div class="bg-white p-4 rounded-xl shadow mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+            <label class="block font-medium mb-1">Κατάσταση:</label>
+            <select class="p-2 border rounded w-full sm:w-48">
+                <option>Όλες</option>
+                <option>Υπό Ανάθεση</option>
+                <option>Ενεργή</option>
+                <option>Υπό Εξέταση</option>
+                <option>Περατωμένη</option>
+                <option>Ακυρωμένη</option>
+            </select>
+        </div>
+        <div>
+            <label class="block font-medium mb-1">Ρόλος:</label>
+            <select class="p-2 border rounded w-full sm:w-48">
+                <option>Όλοι</option>
+                <option>Επιβλέπων</option>
+                <option>Μέλος Τριμελούς</option>
+            </select>
+        </div>
+        <div>
+            <label class="block font-medium mb-1">Εξαγωγή:</label>
+            <div class="flex gap-2">
+                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded shadow text-sm">📥 CSV</button>
+                <button class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded shadow text-sm">📥 JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Λίστα Διπλωματικών -->
+    <div class="space-y-4">
+        <!-- Κάρτα Διπλωματικής -->
+        <div class="bg-white p-5 rounded-2xl shadow border border-gray-200">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h2 class="text-xl font-semibold mb-1">📌 Θέμα: Ανάλυση Big Data σε Cloud Περιβάλλον</h2>
+                    <p class="text-gray-700">Φοιτητής: Ελένη Μπαλάσκα (ΑΜ: 20221123)</p>
+                    <p class="text-sm text-gray-500">Κατάσταση: <span class="text-blue-600 font-medium">Ενεργή</span></p>
+                    <p class="text-sm text-gray-500">Ρόλος: Επιβλέπων</p>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Προβολή</button>
+            </div>
+        </div>
+
+        <!-- Άλλη Κάρτα -->
+        <div class="bg-white p-5 rounded-2xl shadow border border-gray-200">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h2 class="text-xl font-semibold mb-1">📌 Θέμα: Εφαρμογή Τεχνητής Νοημοσύνης για Ιατρικές Διαγνώσεις</h2>
+                    <p class="text-gray-700">Φοιτητής: Δημήτρης Κωνσταντίνου (ΑΜ: 20201087)</p>
+                    <p class="text-sm text-gray-500">Κατάσταση: <span class="text-green-600 font-medium">Περατωμένη</span></p>
+                    <p class="text-sm text-gray-500">Ρόλος: Μέλος Τριμελούς</p>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Προβολή</button>
+            </div>
+        </div>
+
+        <!-- Επανάληψη για κάθε διπλωματική -->
+    </div>
+</div>
+
+</body>
+</html>

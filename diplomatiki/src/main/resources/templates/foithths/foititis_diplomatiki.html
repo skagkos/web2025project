@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Διαχείριση Διπλωματικής</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow">
+    <h1 class="text-2xl font-bold mb-6">🛠️ Διαχείριση Διπλωματικής Εργασίας</h1>
+
+    <div class="space-y-6">
+        <!-- Υπό Ανάθεση -->
+        <div>
+            <h2 class="font-semibold text-lg mb-2">📌 Υπό Ανάθεση</h2>
+            <p>Επιλέξτε τα μέλη της τριμελούς επιτροπής:</p>
+            <input class="w-full p-2 border rounded mt-2" placeholder="π.χ. Καθ. Παπαδόπουλος" />
+            <button class="bg-blue-600 text-white px-4 py-2 rounded mt-2 hover:bg-blue-700">➕ Προσθήκη</button>
+        </div>
+
+        <!-- Υπό Εξέταση -->
+        <div>
+            <h2 class="font-semibold text-lg mb-2">📤 Υπό Εξέταση</h2>
+            <p>Ανέβασε πρόχειρο κείμενο και σύνδεσμο υλικού:</p>
+            <input type="file" class="block mt-2" />
+            <input type="text" class="w-full p-2 border rounded mt-2" placeholder="Σύνδεσμος (Google Drive, YouTube κλπ)" />
+
+            <h3 class="font-medium mt-4">Ημερομηνία & Ώρα Εξέτασης:</h3>
+            <input type="datetime-local" class="w-full p-2 border rounded mt-1" />
+            <input type="text" class="w-full p-2 border rounded mt-2" placeholder="Αίθουσα ή σύνδεσμος παρουσίασης" />
+        </div>
+
+        <!-- Τελική Υποβολή -->
+        <div>
+            <h2 class="font-semibold text-lg mb-2">📑 Τελική Υποβολή</h2>
+            <input class="w-full p-2 border rounded" placeholder="Σύνδεσμος αποθετηρίου (Νημερτής)" />
+        </div>
+    </div>
+
+    <a href="foititis_main.html" class="inline-block mt-6 text-blue-600">🔙 Επιστροφή</a>
+</div>
+</body>
+</html>
