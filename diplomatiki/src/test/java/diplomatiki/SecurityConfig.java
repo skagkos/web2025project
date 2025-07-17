@@ -11,9 +11,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf(csrf -> csrf.disable())   // <-- Απενεργοποιείς το CSRF
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
-                .build(); // No formLogin(), httpBasic(), or csrf() needed
+                .build();
     }
 }
+
+
+
