@@ -1,34 +1,31 @@
-<!DOCTYPE html>
-<html lang="el">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Γραμματεία - Αρχική</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 font-sans">
-<div class="max-w-5xl mx-auto p-6">
-    <h1 class="text-3xl font-bold text-center mb-8">Πίνακας Ελέγχου Γραμματείας</h1>
+    <!DOCTYPE html>
+    <html lang="el" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Γραμματεία - Αρχική</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-100 font-sans">
+    <div class="max-w-5xl mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-8">Πίνακας Ελέγχου Γραμματείας</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Προβολή ΔΕ -->
-        <a href="gramateia provoli de.html" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-            <h2 class="text-xl font-semibold mb-2">📄 Προβολή ΔΕ</h2>
-            <p>Δες όλες τις διπλωματικές που είναι σε κατάσταση Ενεργή ή Υπό Εξέταση, με όλες τις λεπτομέρειες.</p>
-        </a>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a th:href="@{/gramateia/gramateia_provoli_de}" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h2 class="text-xl font-semibold mb-2">📄 Προβολή ΔΕ</h2>
+                <p>Δες όλες τις διπλωματικές που είναι σε κατάσταση Ενεργή ή Υπό Εξέταση.</p>
+            </a>
 
-        <!-- Εισαγωγή Δεδομένων -->
-        <a href="gramateia_import_json.html" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-            <h2 class="text-xl font-semibold mb-2">📂 Εισαγωγή Δεδομένων</h2>
-            <p>Φόρτωσε αρχείο JSON με φοιτητές και διδάσκοντες για εισαγωγή στο σύστημα.</p>
-        </a>
+            <a th:href="@{/gramateia/gramateia_import_json}" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h2 class="text-xl font-semibold mb-2">📂 Εισαγωγή Δεδομένων</h2>
+                <p>Φόρτωσε αρχείο JSON με φοιτητές και διδάσκοντες.</p>
+            </a>
 
-        <!-- Διαχείριση Διπλωματικής -->
-        <a href="gramateia_diplomatiki.html" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-            <h2 class="text-xl font-semibold mb-2">🛠️ Διαχείριση Διπλωματικής</h2>
-            <p>Καταχώρισε ΑΠ, ακύρωσε αναθέσεις ή σήμανε την περάτωση ΔΕ, ανάλογα την κατάστασή της.</p>
-        </a>
+            <a th:href="@{/gramateia/gramateia_diplomatiki}" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h2 class="text-xl font-semibold mb-2">🛠️ Διαχείριση Διπλωματικής</h2>
+                <p>Καταχώρισε ή τροποποίησε πληροφορίες διπλωματικών εργασιών.</p>
+            </a>
+        </div>
     </div>
-</div>
-</body>
-</html>
+    </body>
+    </html>

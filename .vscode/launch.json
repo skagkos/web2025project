@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DiplomatikiApplication<diplomatiki>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "diplomatiki.DiplomatikiApplication",
+            "projectName": "diplomatiki",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
