@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Πίνακας Διδάσκοντα</title>
@@ -45,36 +45,35 @@
 <h1>Πίνακας Ελέγχου Διδάσκοντα</h1>
 
 <div class="grid-container">
-    <div class="card" onclick="location.href='/didaskon/themata'">
+    <div class="card" th:onclick="'location.href=\'' + @{/didaskon/themata} + '\''">
         <h2>1. Προβολή & Δημιουργία Θεμάτων</h2>
         <p>Καταχώριση νέου θέματος και διαχείριση λίστας θεμάτων προς ανάθεση.</p>
     </div>
 
-    <div class="card" onclick="location.href='/didaskon/anathesi'">
+    <div class="card" th:onclick="'location.href=\'' + @{/didaskon/anathesi} + '\''">
         <h2>2. Ανάθεση Θέματος σε Φοιτητή</h2>
         <p>Αρχική προσωρινή ανάθεση θέματος αναζητώντας φοιτητή με ΑΜ ή ονοματεπώνυμο.</p>
     </div>
 
-    <div class="card" onclick="location.href='lista_diplwmatikon.html'">
+    <div class="card" th:onclick="'location.href=\'' + @{/didaskon/lista_diplwmatikon} + '\''">
         <h2>3. Προβολή Λίστας Διπλωματικών</h2>
         <p>Πλήρης λίστα με δυνατότητες φιλτραρίσματος και εξαγωγής σε CSV ή JSON.</p>
     </div>
 
-    <div class="card" onclick="location.href='proskliseis.html'">
+    <div class="card" th:onclick="'location.href=\'' + @{/didaskon/proskliseis} + '\''">
         <h2>4. Προσκλήσεις για Τριμελείς</h2>
         <p>Δείτε και διαχειριστείτε προσκλήσεις για συμμετοχή σε τριμελείς επιτροπές.</p>
     </div>
 
-    <div class="card" onclick="location.href='statistika.html'">
+    <div class="card" th:onclick="'location.href=\'' + @{/didaskon/statistika} + '\''">
         <h2>5. Προβολή Στατιστικών</h2>
         <p>Στατιστικά στοιχεία για επιβλεπόμενες και τριμελείς διπλωματικές εργασίες.</p>
     </div>
 
-    <div class="card" onclick="location.href='diacheirisi.html'">
+    <div class="card" th:onclick="'location.href=\'' + @{/didaskon/diacheirisi} + '\''">
         <h2>6. Διαχείριση Διπλωματικών Εργασιών</h2>
         <p>Ενέργειες ανάλογα με την κατάσταση κάθε διπλωματικής εργασίας.</p>
     </div>
 </div>
 </body>
 </html>
-`
