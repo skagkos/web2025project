@@ -19,10 +19,10 @@ public class HomeController {
     }
 
     // Υποσελίδες Διδάσκοντα
-    @GetMapping("/didaskon/themata")
-    public String themata() {
-        return "didaskon/themata"; // templates/didaskon/themata.html
-    }
+    // @GetMapping("/didaskon/themata")
+    // public String themata() {
+    // return "didaskon/themata"; // templates/didaskon/themata.html
+    // }
 
     @GetMapping("/didaskon/anathesi")
     public String anathesi() {

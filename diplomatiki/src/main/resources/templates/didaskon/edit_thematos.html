@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Επεξεργασία Θέματος</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+<div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">✏️ Επεξεργασία Θέματος</h1>
+
+    <form th:action="@{/didaskon/themata/edit}" th:object="${topic}" method="post" enctype="multipart/form-data" class="space-y-4">
+        <input type="hidden" th:field="*{topicId}"/>
+
+        <div>
+            <label class="block mb-1 font-medium">Τίτλος:</label>
+            <input type="text" th:field="*{title}" class="w-full p-2 border rounded" required/>
+        </div>
+
+        <div>
+            <label class="block mb-1 font-medium">Σύνοψη:</label>
+            <textarea th:field="*{summary}" class="w-full p-2 border rounded" rows="4" required></textarea>
+        </div>
+
+        <!-- Προβολή Τρέχοντος PDF -->
+<div th:if="${topic.descriptionPdfPath}">
+    <label class="block mb-1 font-medium">Τρέχον PDF:</label>
+    <a th:href="@{${topic.descriptionPdfPath}}" 
+       class="text-blue-600 underline" target="_blank"
+       th:text="${#strings.substring(topic.descriptionPdfPath, topic.descriptionPdfPath.lastIndexOf('/') + 1)}">
+        Τρέχον αρχείο PDF
+    </a>
+</div>
+
+
+
+        <!-- Επιλογή νέου PDF -->
+        <div>
+            <label class="block mb-1 font-medium">Νέο Αρχείο PDF (προαιρετικό):</label>
+            <input type="file" name="pdf" accept=".pdf" class="w-full"/>
+        </div>
+
+        <div class="flex justify-between">
+            <a href="/didaskon/themata" class="text-sm text-gray-600 underline">⬅ Επιστροφή</a>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+                💾 Αποθήκευση Αλλαγών
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
