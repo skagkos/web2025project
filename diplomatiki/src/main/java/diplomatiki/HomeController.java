@@ -9,7 +9,7 @@ public class HomeController {
     // Αρχική σελίδα
     @GetMapping("/")
     public String home() {
-        return "home"; // templates/login.html
+        return "login"; // templates/login.html
     }
 
     // Σελίδα Διδάσκοντα (Αρχική προβολή)

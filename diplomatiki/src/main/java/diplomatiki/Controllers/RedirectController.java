@@ -32,11 +32,11 @@ public class RedirectController {
 
         switch (role) {
             case "student":
-                return "redirect:/student/" + userId;
+                return "redirect:/foithths";
             case "professor":
-                return "redirect:/professor/" + userId;
+                 return "redirect:/didaskon";
             case "secretary":
-                return "redirect:/secretary/" + userId;
+                return "redirect:/gramateia";
             default:
                 return "redirect:/login";
         }
