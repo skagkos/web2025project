@@ -1,4 +1,4 @@
-package diplomatiki;
+package diplomatiki.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,10 @@ public class HomeController {
     }
 
     // Σελίδα Διδάσκοντα (Αρχική προβολή)
-    @GetMapping("/didaskon")
-    public String didaskon() {
-        return "didaskon/didaskon"; // templates/didaskon/didaskon.html
-    }
+    // @GetMapping("/didaskon")
+    // public String didaskon() {
+    // return "didaskon/didaskon"; // templates/didaskon/didaskon.html
+    // }
 
     // Υποσελίδες Διδάσκοντα
     // @GetMapping("/didaskon/themata")

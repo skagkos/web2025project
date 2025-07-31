@@ -1,4 +1,4 @@
-package diplomatiki.models;
+package diplomatiki.entity;
 
 import jakarta.persistence.*;
 
@@ -11,28 +11,19 @@ public class ThesisTopic {
     private Integer topicId;
 
     private String title;
+
+    @Column(length = 2000)
     private String summary;
 
-    @Column(name = "description_pdf_path")
     private String descriptionPdfPath;
 
-    @Column(name = "is_assigned")
-    private boolean isAssigned;
+    private boolean assigned;
 
-    // Για τώρα, μπορείς να σχολιάσεις τον professor για να αποφύγεις το error
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
-
-    // Getters & Setters
+    // === Getters & Setters ===
 
     public Integer getTopicId() {
         return topicId;
@@ -67,10 +58,18 @@ public class ThesisTopic {
     }
 
     public boolean isAssigned() {
-        return isAssigned;
+        return assigned;
     }
 
     public void setAssigned(boolean assigned) {
-        isAssigned = assigned;
+        this.assigned = assigned;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 }

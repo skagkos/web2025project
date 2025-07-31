@@ -1,6 +1,5 @@
 package diplomatiki.Controllers;
 
-import diplomatiki.entity.Role;
 import diplomatiki.entity.User;
 import diplomatiki.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,30 +11,30 @@ import java.security.Principal;
 @Controller
 public class RedirectController {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public RedirectController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/redirect")
     public String redirectAfterLogin(Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
         User user = userRepository.findByUsername(principal.getName()).orElse(null);
         if (user == null) {
             return "redirect:/login";
         }
 
-        // Παίρνουμε τον πρώτο ρόλο (αν υπάρχει)
-        String role = user.getRoles().stream()
-                .findFirst()
-                .map(Role::getName)
-                .orElse("");
-
-        Long userId = user.getId(); // το σωστό όνομα πεδίου
-
-        switch (role) {
-            case "student":
+        switch (user.getRole()) {
+            case STUDENT:
                 return "redirect:/foithths";
-            case "professor":
-                 return "redirect:/didaskon";
-            case "secretary":
+            case PROFESSOR:
+                return "redirect:/didaskon";
+            case SECRETARY:
                 return "redirect:/gramateia";
             default:
                 return "redirect:/login";

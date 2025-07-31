@@ -1,36 +1,28 @@
 package diplomatiki.entity;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "users") // προσοχή: βάλε σωστό όνομα πίνακα όπως έχεις στη βάση
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles", // Πίνακας σύνδεσης στη βάση
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    // Χωρίς @Enumerated, ώστε να εφαρμόζεται ο RoleConverter(autoApply=true)
+    @Column(nullable = false)
+    private Role role;
 
-    // === GETTERS & SETTERS ===
-
+    // === Getters & Setters ===
     public Long getId() {
         return id;
     }
@@ -63,11 +55,11 @@ public class User {
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

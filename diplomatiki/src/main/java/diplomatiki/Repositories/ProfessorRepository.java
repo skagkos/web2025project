@@ -1,7 +1,11 @@
 package diplomatiki.Repositories;
 
-import diplomatiki.models.Professor;
+import diplomatiki.entity.Professor;
+import diplomatiki.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProfessorRepository extends JpaRepository<Professor, Integer> {
+import java.util.Optional;
+
+public interface ProfessorRepository extends JpaRepository<Professor, Long> {
+    Optional<Professor> findByUser(User user);
 }
