@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface ThesisTopicRepository extends JpaRepository<ThesisTopic, Integer> {
     List<ThesisTopic> findByProfessor(Professor professor);
+
+    // ✅ Πρόσθεσε αυτή τη μέθοδο:
+    List<ThesisTopic> findByAssignedFalse();
 }

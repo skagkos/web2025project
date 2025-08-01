@@ -24,10 +24,10 @@ public class HomeController {
     // return "didaskon/themata"; // templates/didaskon/themata.html
     // }
 
-    @GetMapping("/didaskon/anathesi")
-    public String anathesi() {
-        return "didaskon/anathesi"; // templates/didaskon/anathesi.html
-    }
+    // @GetMapping("/didaskon/anathesi")
+    // public String anathesi() {
+    // return "didaskon/anathesi"; // templates/didaskon/anathesi.html
+    // }
 
     @GetMapping("/didaskon/lista_diplwmatikon")
     public String listaDiplwmatikon() {
