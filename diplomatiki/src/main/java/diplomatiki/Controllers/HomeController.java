@@ -29,15 +29,16 @@ public class HomeController {
     // return "didaskon/anathesi"; // templates/didaskon/anathesi.html
     // }
 
-    @GetMapping("/didaskon/lista_diplwmatikon")
-    public String listaDiplwmatikon() {
-        return "didaskon/lista_diplwmatikon"; // templates/didaskon/lista_diplwmatikon.html
-    }
+    // @GetMapping("/didaskon/lista_diplwmatikon")
+    // public String listaDiplwmatikon() {
+    // return "didaskon/lista_diplwmatikon"; //
+    // templates/didaskon/lista_diplwmatikon.html
+    // }
 
-    @GetMapping("/didaskon/proskliseis")
-    public String proskliseis() {
-        return "didaskon/proskliseis"; // templates/didaskon/proskliseis.html
-    }
+    // @GetMapping("/didaskon/proskliseis")
+    // public String proskliseis() {
+    // return "didaskon/proskliseis"; // templates/didaskon/proskliseis.html
+    // }
 
     @GetMapping("/didaskon/statistika")
     public String statistika() {

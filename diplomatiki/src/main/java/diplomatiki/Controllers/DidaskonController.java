@@ -2,6 +2,7 @@ package diplomatiki.Controllers;
 
 import diplomatiki.Repositories.*;
 import diplomatiki.entity.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ public class DidaskonController {
     private final UserRepository userRepository;
     private final StudentRepository studentRepo;
     private final ThesisRepository thesisRepo;
+    private final CommitteeMemberRepository committeeRepo;
 
     private final Path uploadBase;
 
@@ -32,12 +34,14 @@ public class DidaskonController {
             UserRepository userRepository,
             StudentRepository studentRepo,
             ThesisRepository thesisRepo,
+            CommitteeMemberRepository committeeRepo,
             @Value("${upload.dir:/tmp/uploads}") String uploadDir) throws IOException {
         this.topicRepo = topicRepo;
         this.professorRepo = professorRepo;
         this.userRepository = userRepository;
         this.studentRepo = studentRepo;
         this.thesisRepo = thesisRepo;
+        this.committeeRepo = committeeRepo;
         this.uploadBase = Paths.get(uploadDir).toAbsolutePath().normalize();
         Files.createDirectories(this.uploadBase);
     }
@@ -54,26 +58,29 @@ public class DidaskonController {
         return "didaskon/didaskon";
     }
 
+    // --- Θέματα ---
     @GetMapping("/themata")
     public String showThemata(Model model, Principal principal) {
         Optional<Professor> profOpt = getProfessorForPrincipal(principal);
-        if (profOpt.isEmpty())
+        if (profOpt.isEmpty()) {
             return "redirect:/login";
+        }
         List<ThesisTopic> topics = topicRepo.findByProfessor(profOpt.get());
         model.addAttribute("topics", topics);
         return "didaskon/themata";
     }
 
     @PostMapping("/themata")
-    public String createThema(@RequestParam("title") String title,
-            @RequestParam("summary") String summary,
+    public String createThema(@RequestParam String title,
+            @RequestParam String summary,
             @RequestParam("pdf") MultipartFile pdfFile,
             Model model,
             Principal principal) {
 
         Optional<Professor> professorOpt = getProfessorForPrincipal(principal);
-        if (professorOpt.isEmpty())
+        if (professorOpt.isEmpty()) {
             return "redirect:/login";
+        }
 
         if (pdfFile == null || pdfFile.isEmpty()) {
             model.addAttribute("error", "❌ Το PDF είναι υποχρεωτικό.");
@@ -107,10 +114,11 @@ public class DidaskonController {
     }
 
     @GetMapping("/themata/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, Principal principal) {
+    public String showEditForm(@PathVariable Integer id, Model model, Principal principal) {
         Optional<ThesisTopic> topicOpt = topicRepo.findById(id);
-        if (topicOpt.isEmpty())
+        if (topicOpt.isEmpty()) {
             return "redirect:/didaskon/themata";
+        }
 
         ThesisTopic topic = topicOpt.get();
         Optional<Professor> profOpt = getProfessorForPrincipal(principal);
@@ -124,18 +132,20 @@ public class DidaskonController {
     }
 
     @PostMapping("/themata/edit/{id}")
-    public String updateThema(@PathVariable("id") Integer id,
-            @RequestParam("title") String title,
-            @RequestParam("summary") String summary,
+    public String updateThema(@PathVariable Integer id,
+            @RequestParam String title,
+            @RequestParam String summary,
             @RequestParam(value = "pdf", required = false) MultipartFile pdfFile,
             Principal principal) {
 
-        if (principal == null || principal.getName() == null)
+        if (principal == null || principal.getName() == null) {
             return "redirect:/login";
+        }
 
         Optional<ThesisTopic> existingOpt = topicRepo.findById(id);
-        if (existingOpt.isEmpty())
+        if (existingOpt.isEmpty()) {
             return "redirect:/didaskon/themata";
+        }
 
         ThesisTopic existing = existingOpt.get();
         Optional<Professor> profOpt = getProfessorForPrincipal(principal);
@@ -165,6 +175,7 @@ public class DidaskonController {
         return "redirect:/didaskon/themata";
     }
 
+    // --- Ανάθεση ---
     @GetMapping("/anathesi")
     public String showAssignmentPage(Model model) {
         List<ThesisTopic> availableTopics = topicRepo.findByAssignedFalse();
@@ -179,14 +190,14 @@ public class DidaskonController {
     }
 
     @PostMapping("/anathesi")
-    public String assignThesis(@RequestParam("studentId") int studentId,
-            @RequestParam("topicId") int topicId) {
+    public String assignThesis(@RequestParam("studentId") Integer studentId,
+            @RequestParam("topicId") Integer topicId) {
 
         Optional<Student> studentOpt = studentRepo.findById(studentId);
         Optional<ThesisTopic> topicOpt = topicRepo.findById(topicId);
 
         if (studentOpt.isEmpty() || topicOpt.isEmpty()) {
-            return "redirect:/didaskon/anathesi?error";
+            return "redirect:/didaskon/anathesi?error=missing";
         }
 
         Thesis thesis = new Thesis();
@@ -205,15 +216,126 @@ public class DidaskonController {
     }
 
     @PostMapping("/anathesi/delete")
-    public String cancelAssignment(@RequestParam("thesisId") int thesisId) {
+    public String cancelAssignment(@RequestParam("thesisId") Integer thesisId) {
         Optional<Thesis> thesisOpt = thesisRepo.findById(thesisId);
         if (thesisOpt.isPresent()) {
             Thesis thesis = thesisOpt.get();
             ThesisTopic topic = thesis.getTopic();
-            topic.setAssigned(false);
-            topicRepo.save(topic);
+            if (topic != null) {
+                topic.setAssigned(false);
+                topicRepo.save(topic);
+            }
             thesisRepo.delete(thesis);
         }
         return "redirect:/didaskon/anathesi";
+    }
+
+    // --- Προσκλήσεις ---
+    @GetMapping("/proskliseis")
+    public String viewInvitations(Model model, Principal principal) {
+        Optional<Professor> professorOpt = getProfessorForPrincipal(principal);
+        if (professorOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+
+        List<CommitteeMember> invitations = committeeRepo.findByProfessorAndAcceptedIsNull(professorOpt.get());
+        model.addAttribute("invitations", invitations);
+        return "didaskon/proskliseis";
+    }
+
+    @PostMapping("/proskliseis/accept")
+    public String acceptInvitation(@RequestParam("committeeId") Integer id) {
+        Optional<CommitteeMember> cmOpt = committeeRepo.findById(id);
+        if (cmOpt.isPresent()) {
+            CommitteeMember cm = cmOpt.get();
+            cm.setAccepted(true);
+            cm.setResponseDate(LocalDate.now());
+            committeeRepo.save(cm);
+        }
+        return "redirect:/didaskon/proskliseis";
+    }
+
+    @PostMapping("/proskliseis/reject")
+    public String rejectInvitation(@RequestParam("committeeId") Integer id) {
+        Optional<CommitteeMember> cmOpt = committeeRepo.findById(id);
+        if (cmOpt.isPresent()) {
+            CommitteeMember cm = cmOpt.get();
+            cm.setAccepted(false);
+            cm.setResponseDate(LocalDate.now());
+            committeeRepo.save(cm);
+        }
+        return "redirect:/didaskon/proskliseis";
+    }
+
+    // --- Δημιουργία πρόσκλησης ---
+    @GetMapping("/prosklisi")
+    public String createInvitationForm(Model model) {
+        List<Thesis> theses = thesisRepo.findAll();
+        List<Professor> professors = professorRepo.findAll();
+        model.addAttribute("theses", theses);
+        model.addAttribute("professors", professors);
+        return "didaskon/prosklisi";
+    }
+
+    @PostMapping("/prosklisi")
+    public String submitInvitation(@RequestParam("thesisId") Integer thesisId,
+            @RequestParam("professorId") Integer professorId,
+            @RequestParam("role") String role) {
+
+        Optional<Thesis> thesisOpt = thesisRepo.findById(thesisId);
+        Optional<Professor> profOpt = professorRepo.findById(professorId);
+
+        if (thesisOpt.isEmpty() || profOpt.isEmpty()) {
+            return "redirect:/didaskon/proskliseis?error=missing";
+        }
+
+        Thesis thesis = thesisOpt.get();
+        Professor professor = profOpt.get();
+
+        // αποφυγή διπλής ίδιας πρόσκλησης (σε αναμονή)
+        boolean alreadyInvited = committeeRepo.findByProfessorAndAcceptedIsNull(professor).stream()
+                .anyMatch(cm -> {
+                    if (cm.getThesis() == null || cm.getRole() == null)
+                        return false;
+                    boolean sameThesis = Objects.equals(getThesisId(cm.getThesis()), getThesisId(thesis));
+                    boolean sameRole = cm.getRole().name().equalsIgnoreCase(role);
+                    return sameThesis && sameRole;
+                });
+        if (alreadyInvited) {
+            return "redirect:/didaskon/proskliseis?error=alreadyInvited";
+        }
+
+        CommitteeMember cm = new CommitteeMember();
+        cm.setThesis(thesis);
+        cm.setProfessor(professor);
+        try {
+            cm.setRole(CommitteeMember.Role.valueOf(role));
+        } catch (IllegalArgumentException e) {
+            return "redirect:/didaskon/proskliseis?error=invalidRole";
+        }
+        cm.setAccepted(null); // σε αναμονή απάντησης
+        cm.setInvitationDate(LocalDate.now());
+        cm.setResponseDate(null);
+
+        committeeRepo.save(cm);
+
+        return "redirect:/didaskon/proskliseis?invited";
+    }
+
+    /**
+     * Βοηθητικό για να πάρουμε το id της διπλωματικής ανεξάρτητα από το getter name
+     * Αν η οντότητα Thesis έχει getId(), αλλά αν είναι getThesisId() προσαρμόζεις
+     * ανάλογα.
+     */
+    private Integer getThesisId(Thesis thesis) {
+        try {
+            return (Integer) thesis.getClass().getMethod("getId").invoke(thesis);
+        } catch (Exception e) {
+            try {
+                return (Integer) thesis.getClass().getMethod("getThesisId").invoke(thesis);
+            } catch (Exception ex) {
+                return null;
+            }
+        }
     }
 }
