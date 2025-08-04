@@ -1,36 +1,75 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="el" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Επεξεργασία Προφίλ</title>
+    <title>Προφίλ Χρήστη</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 p-6 font-sans">
 <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow">
-    <h1 class="text-2xl font-bold mb-6">👤 Επεξεργασία Προφίλ</h1>
+    <h1 class="text-2xl font-bold mb-4">👤 Το Προφίλ Μου</h1>
 
-    <form class="space-y-4">
+    <div th:if="${success}" class="mb-4 p-3 bg-green-100 text-green-800 rounded">
+        <span th:text="${success}">Αποθηκεύτηκε επιτυχώς.</span>
+    </div>
+
+    <form th:action="@{/profile}" th:object="${profileForm}" method="post" class="space-y-4">
+        <input type="hidden" sec:csrf=""/>
+
         <div>
-            <label class="block font-medium">Πλήρης Διεύθυνση</label>
-            <input type="text" class="w-full p-2 border rounded" placeholder="π.χ. Οδός 123, Πόλη, ΤΚ" />
+            <label class="block font-medium mb-1" for="username">Όνομα Χρήστη</label>
+            <input id="username" type="text" th:value="${user.username}"
+                   class="w-full p-2 border rounded bg-gray-100" readonly />
         </div>
+
         <div>
-            <label class="block font-medium">Email Επικοινωνίας</label>
-            <input type="email" class="w-full p-2 border rounded" placeholder="π.χ. name@example.com" />
+            <label class="block font-medium mb-1" for="firstName">Όνομα</label>
+            <input id="firstName" type="text" th:field="*{firstName}" class="w-full p-2 border rounded" />
+            <p th:if="${#fields.hasErrors('firstName')}" class="text-red-600 text-sm mt-1" th:errors="*{firstName}"></p>
         </div>
+
         <div>
-            <label class="block font-medium">Τηλέφωνο Κινητό</label>
-            <input type="text" class="w-full p-2 border rounded" />
+            <label class="block font-medium mb-1" for="lastName">Επώνυμο</label>
+            <input id="lastName" type="text" th:field="*{lastName}" class="w-full p-2 border rounded" />
+            <p th:if="${#fields.hasErrors('lastName')}" class="text-red-600 text-sm mt-1" th:errors="*{lastName}"></p>
         </div>
+
         <div>
-            <label class="block font-medium">Τηλέφωνο Σταθερό</label>
-            <input type="text" class="w-full p-2 border rounded" />
+            <label class="block font-medium mb-1" for="address">Πλήρης Διεύθυνση</label>
+            <input id="address" type="text" th:field="*{address}" class="w-full p-2 border rounded"
+                   placeholder="π.χ. Οδός 123, Πόλη, ΤΚ" />
+            <p th:if="${#fields.hasErrors('address')}" class="text-red-600 text-sm mt-1" th:errors="*{address}"></p>
         </div>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">💾 Αποθήκευση</button>
+
+        <div>
+            <label class="block font-medium mb-1" for="email">Email Επικοινωνίας</label>
+            <input id="email" type="email" th:field="*{email}" class="w-full p-2 border rounded"
+                   placeholder="π.χ. name@example.com" />
+            <p th:if="${#fields.hasErrors('email')}" class="text-red-600 text-sm mt-1" th:errors="*{email}"></p>
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1" for="mobilePhone">Τηλέφωνο Κινητό</label>
+            <input id="mobilePhone" type="text" th:field="*{mobilePhone}" class="w-full p-2 border rounded" />
+            <p th:if="${#fields.hasErrors('mobilePhone')}" class="text-red-600 text-sm mt-1" th:errors="*{mobilePhone}"></p>
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1" for="landlinePhone">Τηλέφωνο Σταθερό</label>
+            <input id="landlinePhone" type="text" th:field="*{landlinePhone}" class="w-full p-2 border rounded" />
+            <p th:if="${#fields.hasErrors('landlinePhone')}" class="text-red-600 text-sm mt-1" th:errors="*{landlinePhone}"></p>
+        </div>
+
+        <button type="submit"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+            💾 Αποθήκευση
+        </button>
     </form>
 
-    <a href="foititis_main.html" class="inline-block mt-6 text-blue-600">🔙 Επιστροφή</a>
+    <a th:href="@{/foithths/foithths}" class="inline-block mt-6 text-blue-600">🔙 Επιστροφή</a>
+
 </div>
 </body>
 </html>

@@ -11,10 +11,10 @@ public class StudentController {
         return "foithths/foithths";
     }
 
-    @GetMapping("/foithths/foititis_profile")
-    public String profilePage() {
-        return "foithths/foititis_profile";
-    }
+    // @GetMapping("/foithths/foititis_profile")
+    // public String profilePage() {
+    // return "foithths/foititis_profile";
+    // }
 
     @GetMapping("/foithths/foititis_diplomatiki")
     public String diplomatikiPage() {

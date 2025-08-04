@@ -31,7 +31,7 @@ public class RedirectController {
 
         switch (user.getRole()) {
             case STUDENT:
-                return "redirect:/foithths";
+                return "redirect:/foithths/foithths"; // templates/foithths/foithths.html
             case PROFESSOR:
                 return "redirect:/didaskon";
             case SECRETARY:

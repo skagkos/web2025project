@@ -51,8 +51,7 @@ public class HomeController {
     }
 
     // Σελίδα Φοιτητή
-    @GetMapping("/foithths")
-    public String foithths() {
-        return "foithths/foithths"; // templates/foithths/foithths.html
-    }
+    // @GetMapping("/foithths")
+    // public String foithths() {
+    // // return "foithths/foithths"; // templates/foithths/foithths.html
 }

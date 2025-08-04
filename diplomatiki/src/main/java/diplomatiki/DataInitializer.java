@@ -1,7 +1,10 @@
 package diplomatiki;
 
-import diplomatiki.entity.*;
-import diplomatiki.Repositories.*;
+import diplomatiki.entity.User;
+import diplomatiki.entity.Role;
+import diplomatiki.entity.Professor;
+import diplomatiki.Repositories.ProfessorRepository;
+import diplomatiki.Repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +32,7 @@ public class DataInitializer {
                 User profUser = new User();
                 profUser.setUsername("prof1");
                 profUser.setEmail("prof1@example.com");
-                profUser.setRole(Role.PROFESSOR);
+                profUser.setRole(Role.PROFESSOR); // ✅ αλλαγή εδώ
                 profUser.setPassword(encoder.encode("password"));
                 userRepo.save(profUser);
 
@@ -42,7 +45,7 @@ public class DataInitializer {
                 User student = new User();
                 student.setUsername("student1");
                 student.setEmail("student1@example.com");
-                student.setRole(Role.STUDENT);
+                student.setRole(Role.STUDENT); // ✅ αλλαγή εδώ
                 student.setPassword(encoder.encode("password"));
                 userRepo.save(student);
             }
@@ -51,7 +54,7 @@ public class DataInitializer {
                 User sec = new User();
                 sec.setUsername("sec1");
                 sec.setEmail("secretary@example.com");
-                sec.setRole(Role.SECRETARY);
+                sec.setRole(Role.SECRETARY); // ✅ αλλαγή εδώ
                 sec.setPassword(encoder.encode("password"));
                 userRepo.save(sec);
             }

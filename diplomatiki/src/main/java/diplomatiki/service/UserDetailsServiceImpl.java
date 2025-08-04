@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,12 +22,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Ο χρήστης δεν βρέθηκε: " + username));
 
-        String authority = user.getRole().authority(); // π.χ. ROLE_PROFESSOR
+        String roleName = (user.getRole() != null) ? user.getRole().name() : "USER";
+        String authority = "ROLE_" + roleName; // π.χ. ROLE_PROFESSOR
+
         SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                Collections.singleton(grantedAuthority));
+                List.of(grantedAuthority));
     }
 }
