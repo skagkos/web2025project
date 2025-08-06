@@ -12,46 +12,45 @@ public class HomeController {
         return "login"; // templates/login.html
     }
 
-    // Σελίδα Διδάσκοντα (Αρχική προβολή)
+    // Τα παρακάτω τα κρατάς αν τα χρησιμοποιείς
     // @GetMapping("/didaskon")
     // public String didaskon() {
-    // return "didaskon/didaskon"; // templates/didaskon/didaskon.html
+    //     return "didaskon/didaskon";
     // }
 
-    // Υποσελίδες Διδάσκοντα
     // @GetMapping("/didaskon/themata")
     // public String themata() {
-    // return "didaskon/themata"; // templates/didaskon/themata.html
+    //     return "didaskon/themata";
     // }
 
+    // ❌ Κάνε comment ή σβήσε το προβληματικό mapping
     // @GetMapping("/didaskon/anathesi")
     // public String anathesi() {
-    // return "didaskon/anathesi"; // templates/didaskon/anathesi.html
+    //     return "didaskon/anathesi";
     // }
 
-    // @GetMapping("/didaskon/lista_diplwmatikon")
-    // public String listaDiplwmatikon() {
-    // return "didaskon/lista_diplwmatikon"; //
-    // templates/didaskon/lista_diplwmatikon.html
-    // }
+//    @GetMapping("/didaskon/lista_diplwmatikon")
+//    public String listaDiplwmatikon() {
+//        return "didaskon/lista_diplwmatikon";
+//    }
 
-    // @GetMapping("/didaskon/proskliseis")
-    // public String proskliseis() {
-    // return "didaskon/proskliseis"; // templates/didaskon/proskliseis.html
-    // }
+//    @GetMapping("/didaskon/proskliseis")
+//    public String proskliseis() {
+//        return "didaskon/proskliseis";
+//    }
 
     @GetMapping("/didaskon/statistika")
     public String statistika() {
-        return "didaskon/statistika"; // templates/didaskon/statistika.html
+        return "didaskon/statistika";
     }
 
     @GetMapping("/didaskon/diacheirisi")
     public String diacheirisi() {
-        return "didaskon/diacheirisi"; // templates/didaskon/diacheirisi.html
+        return "didaskon/diacheirisi";
     }
 
-    // Σελίδα Φοιτητή
-    // @GetMapping("/foithths")
-    // public String foithths() {
-    // // return "foithths/foithths"; // templates/foithths/foithths.html
+    @GetMapping("/foithths")
+    public String foithths() {
+        return "foithths/foithths";
+    }
 }

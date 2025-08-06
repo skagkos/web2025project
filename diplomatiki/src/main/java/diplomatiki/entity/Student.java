@@ -7,74 +7,42 @@ import jakarta.persistence.*;
 public class Student {
 
     @Id
-    private Integer studentId;
+    @Column(name = "student_id")
+    private Integer id;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "student_id")
-    private User user;
-
+    @Column(name = "am", nullable = false, unique = true)
     private String am;
+
+    @Column(name = "full_name", nullable = false)
     private String fullName;
+
     private String address;
     private String phoneMobile;
     private String phoneLandline;
 
-    // ✅ GETTERS & SETTERS
+    @OneToOne
+    @JoinColumn(name = "student_id")
+    private User user;
 
-    public Integer getStudentId() {
-        return studentId;
-    }
+    // Getters & Setters
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
+    public String getAm() { return am; }
+    public void setAm(String am) { this.am = am; }
 
-    public User getUser() {
-        return user;
-    }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 
-    public String getAm() {
-        return am;
-    }
+    public String getPhoneMobile() { return phoneMobile; }
+    public void setPhoneMobile(String phoneMobile) { this.phoneMobile = phoneMobile; }
 
-    public void setAm(String am) {
-        this.am = am;
-    }
+    public String getPhoneLandline() { return phoneLandline; }
+    public void setPhoneLandline(String phoneLandline) { this.phoneLandline = phoneLandline; }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneMobile() {
-        return phoneMobile;
-    }
-
-    public void setPhoneMobile(String phoneMobile) {
-        this.phoneMobile = phoneMobile;
-    }
-
-    public String getPhoneLandline() {
-        return phoneLandline;
-    }
-
-    public void setPhoneLandline(String phoneLandline) {
-        this.phoneLandline = phoneLandline;
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }

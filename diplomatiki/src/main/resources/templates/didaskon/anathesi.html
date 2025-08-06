@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el" xmlns:th="http://www.thymeleaf.org">
+<html lang="el">
 <head>
     <meta charset="UTF-8">
     <title>Ανάθεση Θέματος σε Φοιτητή - Διδάσκων</title>
@@ -11,21 +11,14 @@
 <div class="max-w-4xl mx-auto">
     <h1 class="text-3xl font-bold mb-6 text-center">🎓 Ανάθεση Θέματος σε Φοιτητή</h1>
 
-    <!-- ✅ Φόρμα Ανάθεσης -->
+    <!-- Φόρμα Ανάθεσης -->
     <div class="bg-white p-6 rounded-2xl shadow mb-8">
         <h2 class="text-xl font-semibold mb-4">➕ Ανάθεση Ελεύθερου Θέματος</h2>
-        <form th:action="@{/didaskon/anathesi}" method="post" class="space-y-4">
-
-            <!-- Επιλογή Φοιτητή -->
+        <form action="#" method="POST" class="space-y-4">
+            <!-- Αναζήτηση φοιτητή -->
             <div>
-                <label class="block mb-1 font-medium">Επιλογή Φοιτητή:</label>
-                <select name="studentId" class="w-full p-2 border rounded" required>
-                    <option value="">-- Επιλέξτε Φοιτητή --</option>
-                    <option th:each="student : ${students}"
-                            th:value="${student.user.id}"
-                            th:text="${student.fullName + ' (ΑΜ: ' + student.am + ')'}">
-                    </option>
-                </select>
+                <label class="block mb-1 font-medium">Αναζήτηση Φοιτητή (ΑΜ ή Ονοματεπώνυμο):</label>
+                <input type="text" name="studentSearch" class="w-full p-2 border rounded" placeholder="π.χ. 20221001 ή Νίκος Παπαδόπουλος" required>
             </div>
 
             <!-- Επιλογή Θέματος -->
@@ -33,10 +26,9 @@
                 <label class="block mb-1 font-medium">Επιλογή Διαθέσιμου Θέματος:</label>
                 <select name="topicId" class="w-full p-2 border rounded" required>
                     <option value="">-- Επιλέξτε Θέμα --</option>
-                    <option th:each="topic : ${availableTopics}"
-                            th:value="${topic.topicId}"
-                            th:text="${topic.title}">
-                    </option>
+                    <option value="1">Ανάπτυξη πλατφόρμας web για ΔΕ</option>
+                    <option value="2">Μηχανική Μάθηση στην Εκπαίδευση</option>
+                    <option value="3">Ανάλυση Δεδομένων σε Python</option>
                 </select>
             </div>
 
@@ -47,27 +39,23 @@
         </form>
     </div>
 
-    <!-- ✅ Λίστα Προσωρινών Αναθέσεων -->
+    <!-- Λίστα Προσωρινών Αναθέσεων -->
     <div class="bg-white p-6 rounded-2xl shadow">
         <h2 class="text-xl font-semibold mb-4">📋 Προσωρινές Αναθέσεις</h2>
 
-        <div th:if="${#lists.isEmpty(pendingAssignments)}" class="text-gray-600">
-            Δεν υπάρχουν προσωρινές αναθέσεις.
-        </div>
-
-        <div th:each="thesis : ${pendingAssignments}" class="border p-4 rounded mb-4 bg-gray-50 flex justify-between items-center">
+        <!-- Παράδειγμα προσωρινής ανάθεσης -->
+        <div class="border p-4 rounded mb-4 bg-gray-50 flex justify-between items-center">
             <div>
-                <h3 class="font-bold" th:text="'ΑΜ: ' + ${thesis.student.am} + ' - ' + ${thesis.student.fullName}"></h3>
-                <p class="text-gray-700" th:text="'Θέμα: ' + ${thesis.topic.title}"></p>
+                <h3 class="font-bold">ΑΜ: 20221001 - Νίκος Παπαδόπουλος</h3>
+                <p class="text-gray-700">Θέμα: Ανάλυση Δεδομένων σε Python</p>
                 <p class="text-sm text-yellow-600">Κατάσταση: Προσωρινή ανάθεση (εν αναμονή αποδοχής τριμελούς)</p>
             </div>
-            <form th:action="@{/didaskon/anathesi/delete}" method="post">
-                <input type="hidden" name="thesisId" th:value="${thesis.thesisId}" />
-                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow text-sm">
-                    ❌ Ακύρωση
-                </button>
-            </form>
+            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow text-sm">
+                ❌ Ακύρωση
+            </button>
         </div>
+
+        <!-- Επανάληψη για κάθε προσωρινή ανάθεση -->
     </div>
 </div>
 

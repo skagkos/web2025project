@@ -9,7 +9,8 @@ public class Thesis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer thesisId;
+    @Column(name = "thesis_id")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "topic_id", nullable = false)
@@ -19,20 +20,29 @@ public class Thesis {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
+    @Column(nullable = false)
     private String status;
+
+    @Column(name = "assignment_date")
     private LocalDate assignmentDate;
+
+    @Column(name = "gs_protocol_number")
     private String gsProtocolNumber;
+
+    @Column(name = "gs_protocol_year")
     private Integer gsProtocolYear;
+
+    @Column(name = "repository_link")
     private String repositoryLink;
 
     // === Getters & Setters ===
 
-    public Integer getThesisId() {
-        return thesisId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setThesisId(Integer thesisId) {
-        this.thesisId = thesisId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public ThesisTopic getTopic() {
