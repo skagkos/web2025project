@@ -7,42 +7,74 @@ import jakarta.persistence.*;
 public class Student {
 
     @Id
-    @Column(name = "student_id")
-    private Integer id;
+    private Integer studentId;
 
-    @Column(name = "am", nullable = false, unique = true)
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "student_id")
+    private User user;
+
     private String am;
-
-    @Column(name = "full_name", nullable = false)
     private String fullName;
-
     private String address;
     private String phoneMobile;
     private String phoneLandline;
 
-    @OneToOne
-    @JoinColumn(name = "student_id")
-    private User user;
+    // ✅ GETTERS & SETTERS
 
-    // Getters & Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Integer getStudentId() {
+        return studentId;
+    }
 
-    public String getAm() { return am; }
-    public void setAm(String am) { this.am = am; }
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
+    }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public User getUser() {
+        return user;
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public String getPhoneMobile() { return phoneMobile; }
-    public void setPhoneMobile(String phoneMobile) { this.phoneMobile = phoneMobile; }
+    public String getAm() {
+        return am;
+    }
 
-    public String getPhoneLandline() { return phoneLandline; }
-    public void setPhoneLandline(String phoneLandline) { this.phoneLandline = phoneLandline; }
+    public void setAm(String am) {
+        this.am = am;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneMobile() {
+        return phoneMobile;
+    }
+
+    public void setPhoneMobile(String phoneMobile) {
+        this.phoneMobile = phoneMobile;
+    }
+
+    public String getPhoneLandline() {
+        return phoneLandline;
+    }
+
+    public void setPhoneLandline(String phoneLandline) {
+        this.phoneLandline = phoneLandline;
+    }
 }

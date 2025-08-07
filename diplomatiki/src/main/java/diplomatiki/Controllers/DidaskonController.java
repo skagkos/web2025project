@@ -162,7 +162,7 @@ public class DidaskonController {
                     .cleanPath(Optional.ofNullable(pdfFile.getOriginalFilename()).orElse(""));
             if (!originalFilename.isBlank()) {
                 try {
-                    String fileName = UUID.randomUUID() + "_" + originalFilename;
+                    String fileName = originalFilename;
                     Path target = uploadBase.resolve(fileName);
                     Files.copy(pdfFile.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
                     existing.setDescriptionPdfPath("/pdfs/" + fileName);
@@ -338,6 +338,5 @@ public class DidaskonController {
             }
         }
     }
-
 
 }

@@ -27,8 +27,9 @@
                 <td class="px-6 py-4 border-b" th:text="${thesis.topic.title}"></td>
                 <td class="px-6 py-4 border-b" th:text="${thesis.status}"></td>
                 <td class="px-6 py-4 border-b">
-                    <button class="text-blue-600"
-                            th:attr="onclick='viewDiplomaDetails(' + ${thesis.id} + ')'">
+                    <button class="text-blue-600 underline"
+                            th:if="${thesis.topic.descriptionPdfPath != null}"
+                            th:onclick="'openPdfModal(\\'' + ${thesis.topic.descriptionPdfPath} + '\\')'">
                         Προβολή
                     </button>
                 </td>
@@ -36,16 +37,28 @@
             </tbody>
         </table>
     </div>
-
-    <!-- (optional) hidden sections for note/grade/cancel -->
 </div>
 
+<!-- Modal για προβολή PDF -->
+<div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-60 hidden justify-center items-center z-50">
+    <div class="bg-white p-4 rounded-lg w-11/12 max-w-4xl max-h-[90vh] overflow-auto relative">
+        <button onclick="closePdfModal()" class="absolute top-2 right-2 text-gray-600 text-2xl font-bold hover:text-black">✖</button>
+        <iframe id="pdfViewer" src="" class="w-full h-[80vh]" frameborder="0"></iframe>
+    </div>
+</div>
+
+<!-- JavaScript για άνοιγμα/κλείσιμο PDF modal -->
 <script>
-    function viewDiplomaDetails(id) {
-        console.log("Προβολή διπλωματικής με ID:", id);
-        document.getElementById('notes-section')?.classList.remove('hidden');
-        document.getElementById('cancel-assignment-section')?.classList.remove('hidden');
-        document.getElementById('grade-section')?.classList.remove('hidden');
+    function openPdfModal(pdfPath) {
+        document.getElementById('pdfViewer').src = pdfPath;
+        document.getElementById('pdfModal').classList.remove('hidden');
+        document.getElementById('pdfModal').classList.add('flex');
+    }
+
+    function closePdfModal() {
+        document.getElementById('pdfViewer').src = '';
+        document.getElementById('pdfModal').classList.remove('flex');
+        document.getElementById('pdfModal').classList.add('hidden');
     }
 </script>
 

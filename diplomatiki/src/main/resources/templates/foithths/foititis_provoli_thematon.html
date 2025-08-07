@@ -1,55 +1,89 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Θέματα προς Ανάθεση - Διδάσκων</title>
+    <title>Προβολή Διπλωματικής</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 p-6 font-sans">
+<body class="bg-gray-100 font-sans p-6">
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow space-y-6">
 
-<div class="max-w-4xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6 text-center">📄 Διαχείριση Θεμάτων προς Ανάθεση</h1>
+    <!-- Κύριος Τίτλος -->
+    <header class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold" th:text="${thesis.title}">Τίτλος Διπλωματικής</h1>
+        <span th:switch="${thesis.status}">
+            <span th:case="'ASSIGNED'" class="px-3 py-1 rounded-full bg-blue-100 text-blue-800">Ανατεθειμένη</span>
+            <span th:case="'IN_PROGRESS'" class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800">Σε Εξέλιξη</span>
+            <span th:case="'SUBMITTED'" class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800">Υποβλήθηκε</span>
+            <span th:case="'COMPLETED'" class="px-3 py-1 rounded-full bg-green-100 text-green-800">Ολοκληρώθηκε</span>
+            <span th:case="*"
+                  class="px-3 py-1 rounded-full bg-gray-100 text-gray-800"
+                  th:text="${thesis.status}">Άγνωστη Κατάσταση</span>
+        </span>
+    </header>
 
-    <!-- Φόρμα Νέου Θέματος -->
-    <div class="bg-white p-6 rounded-2xl shadow mb-8">
-        <h2 class="text-xl font-semibold mb-4">➕ Δημιουργία Νέου Θέματος</h2>
-        <form action="#" method="POST" enctype="multipart/form-data" class="space-y-4">
-            <div>
-                <label class="block mb-1 font-medium">Τίτλος:</label>
-                <input type="text" name="title" class="w-full p-2 border rounded" required>
-            </div>
-            <div>
-                <label class="block mb-1 font-medium">Σύνοψη:</label>
-                <textarea name="summary" rows="3" class="w-full p-2 border rounded" required></textarea>
-            </div>
-            <div>
-                <label class="block mb-1 font-medium">Αρχείο Περιγραφής (PDF):</label>
-                <input type="file" name="pdf" accept=".pdf" class="w-full" required>
-            </div>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-                Καταχώρηση Θέματος
-            </button>
-        </form>
-    </div>
-
-    <!-- Λίστα Υπαρχόντων Θεμάτων -->
-    <div class="bg-white p-6 rounded-2xl shadow">
-        <h2 class="text-xl font-semibold mb-4">📋 Υπάρχοντα Θέματα Προς Ανάθεση</h2>
-
-        <!-- Παράδειγμα Θέματος -->
-        <div class="border p-4 rounded mb-4 bg-gray-50">
-            <h3 class="font-bold text-lg">Ανάπτυξη Web Πλατφόρμας ΔΕ</h3>
-            <p class="text-gray-700 mb-2">Πλατφόρμα διαχείρισης διπλωματικών εργασιών για Τμήμα Πληροφορικής.</p>
-            <a href="#" class="text-blue-600 underline mr-4">Προβολή PDF</a>
-            <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded shadow text-sm">
-                ✏️ Επεξεργασία
-            </button>
+    <!-- Βασικές Πληροφορίες -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <h2 class="text-xl font-semibold mb-2">Λεπτομέρειες Διπλωματικής</h2>
+            <p class="text-gray-700 leading-relaxed" th:text="${thesis.description}">
+                Περιγραφή της διπλωματικής εργασίας...
+            </p>
         </div>
+        <div class="space-y-4">
+            <div>
+                <span class="font-medium">Επιβλέπων:</span>
+                <span th:text="${thesis.supervisor.fullName}">Καθηγητής Α. Παπαδόπουλος</span>
+            </div>
+            <div>
+                <span class="font-medium">Ανατέθηκε:</span>
+                <span th:text="${#temporals.format(thesis.assignedDate, 'dd/MM/yyyy')}">01/08/2025</span>
+            </div>
+            <div>
+                <span class="font-medium">Προθεσμία:</span>
+                <span th:text="${#temporals.format(thesis.dueDate, 'dd/MM/yyyy')}">30/09/2025</span>
+            </div>
+        </div>
+    </section>
 
-        <!-- Μπορείς να επαναλάβεις το παραπάνω block για κάθε θέμα -->
-    </div>
+    <!-- Μέλη Τριμελούς Επιτροπής -->
+    <section>
+        <h2 class="text-xl font-semibold mb-3">Μέλη Τριμελούς Επιτροπής</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full table-auto text-left">
+                <thead>
+                    <tr class="bg-gray-50">
+                        <th class="px-4 py-2">Όνομα</th>
+                        <th class="px-4 py-2">Ρόλος</th>
+                        <th class="px-4 py-2">Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="member : ${committeeMembers}">
+                        <td class="border-t px-4 py-2" th:text="${member.fullName}">Μέλος 1</td>
+                        <td class="border-t px-4 py-2" th:text="${member.role}">Πρόεδρος</td>
+                        <td class="border-t px-4 py-2">
+                            <a th:href="'mailto:' + ${member.email}" class="text-blue-600 underline"
+                               th:text="${member.email}">email@uni.gr</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(committeeMembers)}">
+                        <td colspan="3" class="px-4 py-6 text-center text-gray-500">
+                            Δεν έχουν οριστεί ακόμα μέλη επιτροπής.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Ενέργειες -->
+    <footer class="flex justify-end">
+        <a th:href="@{/foithths}" class="text-blue-600 hover:underline">
+            🔙 Επιστροφή στην αρχική των φοιτητών
+        </a>
+    </footer>
 </div>
-
 </body>
 </html>

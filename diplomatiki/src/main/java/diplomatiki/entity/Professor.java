@@ -14,8 +14,6 @@ public class Professor {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Προσθέτεις πεδία αν χρειάζονται (π.χ. τμήμα, βαθμίδα κτλ.)
-
     public Professor() {
     }
 
