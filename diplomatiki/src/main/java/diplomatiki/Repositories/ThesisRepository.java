@@ -9,5 +9,6 @@ import java.util.List;
 public interface ThesisRepository extends JpaRepository<Thesis, Integer> {
     List<Thesis> findByTopic_Professor(Professor professor);
 
-    List<Thesis> findByStatus(String pending);
+    List<Thesis> findByStatus(String status);
+
 }

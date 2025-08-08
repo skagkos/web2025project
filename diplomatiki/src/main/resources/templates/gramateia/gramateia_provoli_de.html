@@ -2,33 +2,36 @@
 <html lang="el" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Προβολή Διπλωματικών Εργασιών</title>
+    <title>Διαθέσιμα Θέματα Διπλωματικής</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 p-6 font-sans">
-<div class="max-w-6xl mx-auto">
-    <h1 class="text-2xl font-bold mb-6">📄 Προβολή Διπλωματικών Εργασιών</h1>
+<body class="bg-gray-100 font-sans min-h-screen p-6">
+<div class="max-w-5xl mx-auto space-y-6">
+    <h1 class="text-3xl font-bold text-center mb-8">Διαθέσιμα Θέματα Διπλωματικής</h1>
 
-    <div class="bg-white rounded-2xl shadow p-5 mb-4 border border-gray-200">
-        <h2 class="text-lg font-semibold mb-2">Θέμα: Ανάλυση Δεδομένων με Python</h2>
-        <p class="text-sm text-gray-700 mb-1">Φοιτητής: Άννα Λεμονιά (ΑΜ: 20204567)</p>
-        <p class="text-sm text-gray-600 mb-1">Κατάσταση: Ενεργή</p>
-        <p class="text-sm text-gray-600 mb-1">Μέλη Τριμελούς: Καθ. Ι. Παπαδόπουλος, Δρ. Ν. Σαμαράς</p>
-        <p class="text-sm text-gray-500">Ημέρες από ανάθεση: 45</p>
+    <div th:if="${#lists.isEmpty(topics)}" class="text-center text-gray-500 text-lg">
+        Δεν υπάρχουν διαθέσιμα θέματα προς το παρόν.
     </div>
 
-    <!-- Άλλη Κάρτα -->
-    <div class="bg-white rounded-2xl shadow p-5 mb-4 border border-gray-200">
-        <h2 class="text-lg font-semibold mb-2">Θέμα: Σχεδίαση UI για Εκπαιδευτική Πλατφόρμα</h2>
-        <p class="text-sm text-gray-700 mb-1">Φοιτητής: Μάριος Χρηστίδης (ΑΜ: 20203321)</p>
-        <p class="text-sm text-gray-600 mb-1">Κατάσταση: Υπό Εξέταση</p>
-        <p class="text-sm text-gray-600 mb-1">Μέλη Τριμελούς: Καθ. Ε. Τζανής, Δρ. Σ. Ρούσσου</p>
-        <p class="text-sm text-gray-500">Ημέρες από ανάθεση: 60</p>
-    </div>
+    <div class="space-y-6" th:each="thesis : ${topics}">
+        <div class="bg-white p-6 rounded-2xl shadow">
+            <h2 class="text-2xl font-bold mb-2" th:text="${thesis.title}">Τίτλος Θέματος</h2>
 
-    <!-- Επιστροφή -->
-    <a href="grammateia_main.html" class="inline-block mt-6 text-blue-600">🔙 Επιστροφή στην αρχική</a>
+            <p class="text-gray-700 mb-4" th:text="${thesis.summary}">Περίληψη θέματος...</p>
+
+            <div class="text-sm text-gray-600 mb-2">
+                Περιγραφή PDF: 
+                <a class="text-blue-600 underline" th:href="@{${thesis.descriptionPdfPath}}" target="_blank">Προβολή</a>
+            </div>
+
+            <div class="text-sm">
+                <span class="font-semibold">Κατάσταση:</span>
+                <span th:if="${thesis.assigned == 0}" class="px-2 py-1 rounded-full bg-green-100 text-green-800 text-sm">Διαθέσιμο</span>
+                <span th:if="${thesis.assigned != 0}" class="px-2 py-1 rounded-full bg-gray-200 text-gray-600 text-sm">Ανατεθειμένο</span>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package diplomatiki.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -34,6 +36,17 @@ public class Thesis {
 
     @Column(name = "repository_link")
     private String repositoryLink;
+
+    @OneToMany(mappedBy = "thesis", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CommitteeMember> committeeMembers;
+
+    public List<CommitteeMember> getCommitteeMembers() {
+        return committeeMembers;
+    }
+
+    public void setCommitteeMembers(List<CommitteeMember> committeeMembers) {
+        this.committeeMembers = committeeMembers;
+    }
 
     // === Getters & Setters ===
 

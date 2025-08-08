@@ -1,329 +1,56 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="el" xmlns:th="http://www.thymeleaf.org">
-=======
-<html lang="el" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
->>>>>>> c6ac7f5003abbc494d0cfaa19216ac502e2a5636
 <head>
     <meta charset="UTF-8">
-    <title>Προβολή Διπλωματικής</title>
+    <title>Οι Διπλωματικές μου</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<<<<<<< HEAD
-<body class="bg-gray-100 font-sans p-6">
-<div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow space-y-6">
-
-    <!-- Κύριος Τίτλος -->
-    <header class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold" th:text="${thesis.title}">Τίτλος Διπλωματικής</h1>
-        <span th:switch="${thesis.status}">
-            <span th:case="'ASSIGNED'" class="px-3 py-1 rounded-full bg-blue-100 text-blue-800">Ανατεθειμένη</span>
-            <span th:case="'IN_PROGRESS'" class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800">Σε Εξέλιξη</span>
-            <span th:case="'SUBMITTED'" class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800">Υποβλήθηκε</span>
-            <span th:case="'COMPLETED'" class="px-3 py-1 rounded-full bg-green-100 text-green-800">Ολοκληρώθηκε</span>
-            <span th:case="*"
-                  class="px-3 py-1 rounded-full bg-gray-100 text-gray-800"
-                  th:text="${thesis.status}">Άγνωστη Κατάσταση</span>
-        </span>
-    </header>
-
-    <!-- Βασικές Πληροφορίες -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-            <h2 class="text-xl font-semibold mb-2">Λεπτομέρειες Διπλωματικής</h2>
-            <p class="text-gray-700 leading-relaxed" th:text="${thesis.description}">
-                Περιγραφή της διπλωματικής εργασίας...
-            </p>
-=======
 <body class="bg-gray-100 font-sans min-h-screen p-6">
+
 <div class="max-w-5xl mx-auto space-y-6">
+    <h1 class="text-3xl font-bold text-center mb-8">Οι Διπλωματικές μου</h1>
 
-    <!-- Header -->
-    <div class="bg-white p-6 rounded-2xl shadow flex justify-between items-start">
-        <div>
-            <h1 class="text-3xl font-bold mb-1" th:text="${thesis.title}">Τίτλος Διπλωματικής</h1>
-            <p class="text-gray-600 mb-2">Επιβλέπων: <span class="font-medium" th:text="${thesis.supervisor.fullName}">Καθηγητής Χ</span> (<a th:href="'mailto:' + ${thesis.supervisor.email}" class="text-blue-600 underline" th:text="${thesis.supervisor.email}">email@domain</a>)</p>
-            <div class="inline-flex items-center space-x-2">
-                <span class="text-sm font-semibold">Κατάσταση:</span>
-                <span th:switch="${thesis.status}">
-                    <span th:case="'ASSIGNED'" class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm">Ανατεθειμένη</span>
-                    <span th:case="'IN_PROGRESS'" class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-sm">Σε εξέλιξη</span>
-                    <span th:case="'SUBMITTED'" class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-sm">Υποβλήθηκε</span>
-                    <span th:case="'REVIEWED'" class="px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm">Ελεγχθεί</span>
-                    <span th:case="'REVISIONS_REQUESTED'" class="px-3 py-1 rounded-full bg-red-100 text-red-800 text-sm">Απαιτούνται διορθώσεις</span>
-                    <span th:case="*"
-                          class="px-3 py-1 rounded-full bg-gray-100 text-gray-800 text-sm"
-                          th:text="${thesis.status}">Άγνωστο</span>
-                </span>
-            </div>
-        </div>
-        <div class="text-right space-y-1 text-sm">
-            <div>
-                <span class="font-semibold">Ανατέθηκε:</span>
-                <span th:text="${#temporals.format(thesis.assignedDate, 'dd MMM yyyy')}">01 Αυγ 2025</span>
-            </div>
-            <div>
-                <span class="font-semibold">Προθεσμία:</span>
-                <span th:text="${#temporals.format(thesis.dueDate, 'dd MMM yyyy')}">30 Σεπ 2025</span>
-            </div>
-            <div th:if="${thesis.grade != null}">
-                <span class="font-semibold">Βαθμολογία:</span>
-                <span class="text-lg font-bold" th:text="${thesis.grade}">9.5</span>
-            </div>
-        </div>
+    <div th:if="${#lists.isEmpty(topics)}" class="text-center text-gray-500 text-lg">
+        Δεν έχεις αναλάβει κάποια διπλωματική ακόμη.
     </div>
 
-    <!-- Περιγραφή και Στοιχεία -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow space-y-4">
-            <h2 class="text-xl font-semibold">Περιγραφή Διπλωματικής</h2>
-            <p class="text-gray-700 leading-relaxed" th:text="${thesis.description}">
-                Εδώ θα εμφανίζεται η πλήρης περιγραφή της διπλωματικής εργασίας, τα αντικείμενα, οι στόχοι κ.λπ.
-            </p>
+    <div class="space-y-6" th:each="thesis : ${topics}">
+        <div class="bg-white p-6 rounded-2xl shadow">
+            <h2 class="text-2xl font-bold mb-2" th:text="${thesis.topic.title}">Τίτλος Θέματος</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 mb-1">Υπεύθυνος / Επιβλέπων</p>
-                    <div class="text-base" th:text="${thesis.supervisor.fullName}">Καθηγητής Α. Β.</div>
-                </div>
-                <div>
-                    <p class="text-sm font-medium text-gray-500 mb-1">Επικοινωνία</p>
-                    <div><a th:href="'mailto:' + ${thesis.supervisor.email}" class="text-blue-600 underline" th:text="${thesis.supervisor.email}">email@uni.gr</a></div>
-                </div>
-            </div>
->>>>>>> c6ac7f5003abbc494d0cfaa19216ac502e2a5636
-        </div>
-        <div class="space-y-4">
-            <div>
-                <span class="font-medium">Επιβλέπων:</span>
-                <span th:text="${thesis.supervisor.fullName}">Καθηγητής Α. Παπαδόπουλος</span>
-            </div>
-            <div>
-                <span class="font-medium">Ανατέθηκε:</span>
-                <span th:text="${#temporals.format(thesis.assignedDate, 'dd/MM/yyyy')}">01/08/2025</span>
-            </div>
-            <div>
-                <span class="font-medium">Προθεσμία:</span>
-                <span th:text="${#temporals.format(thesis.dueDate, 'dd/MM/yyyy')}">30/09/2025</span>
-            </div>
-        </div>
-    </section>
+            <p class="text-gray-700 mb-4" th:text="${thesis.topic.summary}">Περίληψη θέματος...</p>
 
-<<<<<<< HEAD
-    <!-- Μέλη Τριμελούς Επιτροπής -->
-    <section>
-        <h2 class="text-xl font-semibold mb-3">Μέλη Τριμελούς Επιτροπής</h2>
-        <div class="overflow-x-auto">
-            <table class="w-full table-auto text-left">
-                <thead>
-                    <tr class="bg-gray-50">
-                        <th class="px-4 py-2">Όνομα</th>
-                        <th class="px-4 py-2">Ρόλος</th>
-                        <th class="px-4 py-2">Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="member : ${committeeMembers}">
-                        <td class="border-t px-4 py-2" th:text="${member.fullName}">Μέλος 1</td>
-                        <td class="border-t px-4 py-2" th:text="${member.role}">Πρόεδρος</td>
-                        <td class="border-t px-4 py-2">
-                            <a th:href="'mailto:' + ${member.email}" class="text-blue-600 underline"
-                               th:text="${member.email}">email@uni.gr</a>
-                        </td>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(committeeMembers)}">
-                        <td colspan="3" class="px-4 py-6 text-center text-gray-500">
-                            Δεν έχουν οριστεί ακόμα μέλη επιτροπής.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+            <div class="text-sm text-gray-600 mb-2">
+                Περιγραφή PDF:
+                <a class="text-blue-600 underline" th:href="@{${thesis.topic.descriptionPdfPath}}" target="_blank">Προβολή</a>
+            </div>
 
-    <!-- Ενέργειες -->
-    <footer class="flex justify-end">
-        <a th:href="@{/foithths}" class="text-blue-600 hover:underline">
-            🔙 Επιστροφή στην αρχική των φοιτητών
-        </a>
-    </footer>
-=======
-        <!-- Sidebar: Milestones & Έγγραφα -->
-        <div class="space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow">
-                <h3 class="text-lg font-semibold mb-2">Ορόσημα</h3>
-                <ul class="space-y-2">
-                    <li th:each="m : ${milestones}" class="flex items-center justify-between">
-                        <div>
-                            <div class="font-medium" th:text="${m.name}">Πρώτο draft</div>
-                            <div class="text-xs text-gray-500">Λήξη: <span th:text="${#temporals.format(m.dueDate, 'dd/MM/yyyy')}">15/08/2025</span></div>
-                        </div>
-                        <div>
-                            <span th:if="${m.completed}" class="px-2 py-1 text-xs rounded bg-green-100 text-green-800">Ολοκληρωμένο</span>
-                            <span th:if="${!m.completed}" class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-800">Εκκρεμεί</span>
-                        </div>
+            <div class="text-sm mb-4">
+                <span class="font-semibold">Κατάσταση:</span>
+                <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-sm" th:text="${thesis.status}">Κατάσταση</span>
+            </div>
+
+           
+
+            <!-- Τριμελής Επιτροπή -->
+            <div th:if="${thesis.committeeMembers != null}" class="mt-4">
+                <h3 class="font-semibold text-gray-800 mb-2">Τριμελής Επιτροπή:</h3>
+                <ul class="list-disc list-inside space-y-1">
+                    <li th:each="member : ${thesis.committeeMembers}">
+                        <span th:text="${member.professor.fullName}">Καθηγητής Χ</span>
+                        –
+                        <span th:text="${member.role}">ρόλος</span>
+                        <span th:if="${member.accepted == true}" class="text-green-600 text-xs">(αποδέχθηκε)</span>
+                        <span th:if="${member.accepted == false}" class="text-red-600 text-xs">(απέρριψε)</span>
+                        <span th:if="${member.accepted == null}" class="text-gray-600 text-xs">(σε αναμονή)</span>
                     </li>
                 </ul>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow">
-                <h3 class="text-lg font-semibold mb-2">Συνδεδεμένα Έγγραφα</h3>
-                <ul class="space-y-2">
-                    <li th:each="doc : ${documentsAssigned}" class="flex justify-between items-center">
-                        <div>
-                            <div class="font-medium" th:text="${doc.name}">Περίληψη Καθοδήγησης</div>
-                            <div class="text-xs text-gray-500" th:text="${#temporals.format(doc.uploadedAt, 'dd MMM yyyy')}">01 Αυγ 2025</div>
-                        </div>
-                        <div>
-                            <a th:href="${doc.url}" class="text-blue-600 underline text-sm">Κατέβασμα</a>
-                        </div>
-                    </li>
-                    <li th:if="${#lists.isEmpty(documentsAssigned)}" class="text-sm text-gray-500">
-                        Δεν υπάρχουν επισυναπτόμενα έγγραφα.
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
-
-    <!-- Υποβολές / Drafts -->
-    <div class="bg-white p-6 rounded-2xl shadow">
-        <h2 class="text-xl font-semibold mb-4">Υποβληθέντα Draft / Εκδόσεις</h2>
-
-        <div class="overflow-x-auto">
-            <table class="w-full text-left table-auto">
-                <thead>
-                <tr class="bg-gray-50">
-                    <th class="px-4 py-2">Έκδοση</th>
-                    <th class="px-4 py-2">Ανεβάστηκε</th>
-                    <th class="px-4 py-2">Κατάσταση</th>
-                    <th class="px-4 py-2">Ενέργεια</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="d : ${drafts}">
-                    <td class="border-t px-4 py-2" th:text="${d.version}">v1.0</td>
-                    <td class="border-t px-4 py-2" th:text="${#temporals.format(d.uploadedAt, 'dd MMM yyyy HH:mm')}">05 Αυγ 2025 14:23</td>
-                    <td class="border-t px-4 py-2">
-                        <span th:text="${d.status}">Υποβλήθηκε</span>
-                    </td>
-                    <td class="border-t px-4 py-2">
-                        <a th:href="${d.downloadUrl}" class="text-blue-600 underline text-sm">Κατέβασμα</a>
-                    </td>
-                </tr>
-                <tr th:if="${#lists.isEmpty(drafts)}">
-                    <td colspan="4" class="px-4 py-6 text-center text-gray-500">Δεν έχει υποβληθεί ακόμα κανένα draft.</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Φόρμα νέας υποβολής -->
-        <div class="mt-6 border-t pt-6">
-            <h3 class="font-semibold mb-2">Ανέβασμα νέας έκδοσης</h3>
-            <form th:action="@{/thesis/uploadDraft}" method="post" enctype="multipart/form-data" class="space-y-4">
-                <input type="hidden" sec:csrf=""/>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-medium mb-1" for="file">Αρχείο Draft</label>
-                        <input id="file" name="file" type="file" required class="w-full" />
-                    </div>
-                    <div>
-                        <label class="block font-medium mb-1" for="notes">Σημειώσεις (προαιρετικό)</label>
-                        <input id="notes" name="notes" type="text" placeholder="π.χ. αλλαγές που έγιναν" class="w-full p-2 border rounded" />
-                    </div>
-                </div>
-                <button type="submit"
-                        class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
-                    📤 Υποβολή Draft
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Σχόλια / Συνομιλία -->
-    <div class="bg-white p-6 rounded-2xl shadow">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold">Σχόλια / Συνομιλία με Επιβλέποντα</h2>
-            <span class="text-sm text-gray-500" th:if="${thesis.lastUpdated != null}">
-                Τελευταία ενημέρωση: <span th:text="${#temporals.format(thesis.lastUpdated, 'dd MMM yyyy HH:mm')}">04 Αυγ 2025 16:00</span>
-            </span>
-        </div>
-
-        <div class="space-y-6">
-            <div th:each="c : ${comments}" class="border p-4 rounded-lg">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <div class="font-medium" th:text="${c.authorName}">Καθηγητής Α.</div>
-                        <div class="text-xs text-gray-500" th:text="${#temporals.format(c.createdAt, 'dd MMM yyyy HH:mm')}">03 Αυγ 2025 11:20</div>
-                    </div>
-                </div>
-                <p class="mt-2 text-gray-700" th:text="${c.content}">
-                    Σχόλιο/παρατήρηση επιβλέποντα για την έκδοση.
-                </p>
-            </div>
-            <div th:if="${#lists.isEmpty(comments)}" class="text-gray-500">
-                Δεν υπάρχουν ακόμα σχόλια.
-            </div>
-        </div>
-
-        <!-- Προσθήκη νέου σχολίου (π.χ. ερώτηση από φοιτητή) -->
-        <div class="mt-6 border-t pt-4">
-            <h3 class="font-semibold mb-2">Νέο Σχόλιο / Ερώτηση</h3>
-            <form th:action="@{/thesis/comment}" method="post" class="space-y-4">
-                <input type="hidden" sec:csrf=""/>
-                <div>
-                    <label for="message" class="block font-medium mb-1">Μήνυμα</label>
-                    <textarea id="message" name="message" rows="3"
-                              class="w-full p-2 border rounded" placeholder="Γράψε εδώ την ερώτησή σου ή σχόλιο..."></textarea>
-                </div>
-                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    💬 Στείλε
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Ενέργειες: Αίτημα για meeting -->
-    <div class="bg-white p-6 rounded-2xl shadow flex flex-col md:flex-row gap-6">
-        <div class="flex-1">
-            <h3 class="text-lg font-semibold mb-2">Ζήτηση Συνάντησης</h3>
-            <p class="text-gray-600 mb-3">
-                Μπορείς να στείλεις αίτημα για συνάντηση με τον επιβλέποντα για να συζητήσετε πρόοδο ή διορθώσεις.
-            </p>
-            <form th:action="@{/thesis/requestMeeting}" method="post" class="space-y-3">
-                <input type="hidden" sec:csrf=""/>
-                <div>
-                    <label for="preferredDate" class="block font-medium mb-1">Προτεινόμενη Ημερομηνία</label>
-                    <input id="preferredDate" name="preferredDate" type="date" required class="p-2 border rounded w-full" />
-                </div>
-                <div>
-                    <label for="notesMeeting" class="block font-medium mb-1">Θέμα / Σημειώσεις</label>
-                    <input id="notesMeeting" name="notes" type="text" placeholder="Τι θες να συζητήσετε;" class="w-full p-2 border rounded" />
-                </div>
-                <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
-                    📅 Ζήτηση συνάντησης
-                </button>
-            </form>
-        </div>
-        <div class="flex-1">
-            <div class="bg-gray-50 p-4 rounded-lg">
-                <h4 class="font-semibold mb-1">Επόμενο Μελλοντικό Ραντεβού</h4>
-                <div th:if="${nextMeeting != null}">
-                    <p><span class="font-medium">Ημερομηνία:</span> <span th:text="${#temporals.format(nextMeeting.date, 'dd MMM yyyy HH:mm')}">10 Αυγ 2025 11:00</span></p>
-                    <p><span class="font-medium">Τοποθεσία:</span> <span th:text="${nextMeeting.location}">Γραφείο 123</span></p>
-                    <p><span class="font-medium">Σημείωση:</span> <span th:text="${nextMeeting.note}">Συζήτηση για draft</span></p>
-                </div>
-                <div th:if="${nextMeeting == null}" class="text-gray-500">
-                    Δεν υπάρχει προγραμματισμένη συνάντηση.
-                </div>
-            </div>
-        </div>
-    </div>
-
->>>>>>> c6ac7f5003abbc494d0cfaa19216ac502e2a5636
 </div>
+
 </body>
 </html>
