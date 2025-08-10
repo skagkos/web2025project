@@ -55,9 +55,11 @@
 
             <div class="bg-gray-100 p-4 rounded space-y-2">
                 <!-- Συνολικός βαθμός (μόνο αν τον περάσουμε από controller ως avgGrade) -->
-                <p th:if="${avgGrade != null}">
-                    Συνολικός βαθμός: <span th:text="${#numbers.formatDecimal(avgGrade, 1, 2)}">9.00</span>
-                </p>
+              <p th:if="${grade != null}">
+  Συνολικός βαθμός από επιβλέποντα: 
+  <span th:text="${#numbers.formatDecimal(grade, 1, 2)}">8.00</span>
+</p>
+
 
                 <!-- Μέλη επιτροπής -->
                 <div th:if="${thesis.committeeMembers != null and #lists.size(thesis.committeeMembers) > 0}">
