@@ -15,29 +15,29 @@ public class HomeController {
     // Τα παρακάτω τα κρατάς αν τα χρησιμοποιείς
     // @GetMapping("/didaskon")
     // public String didaskon() {
-    //     return "didaskon/didaskon";
+    // return "didaskon/didaskon";
     // }
 
     // @GetMapping("/didaskon/themata")
     // public String themata() {
-    //     return "didaskon/themata";
+    // return "didaskon/themata";
     // }
 
     // ❌ Κάνε comment ή σβήσε το προβληματικό mapping
     // @GetMapping("/didaskon/anathesi")
     // public String anathesi() {
-    //     return "didaskon/anathesi";
+    // return "didaskon/anathesi";
     // }
 
-//    @GetMapping("/didaskon/lista_diplwmatikon")
-//    public String listaDiplwmatikon() {
-//        return "didaskon/lista_diplwmatikon";
-//    }
+    // @GetMapping("/didaskon/lista_diplwmatikon")
+    // public String listaDiplwmatikon() {
+    // return "didaskon/lista_diplwmatikon";
+    // }
 
-//    @GetMapping("/didaskon/proskliseis")
-//    public String proskliseis() {
-//        return "didaskon/proskliseis";
-//    }
+    // @GetMapping("/didaskon/proskliseis")
+    // public String proskliseis() {
+    // return "didaskon/proskliseis";
+    // }
 
     @GetMapping("/didaskon/statistika")
     public String statistika() {

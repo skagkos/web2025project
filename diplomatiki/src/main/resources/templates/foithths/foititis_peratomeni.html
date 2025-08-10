@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="el" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Περατωμένη Διπλωματική</title>
@@ -7,21 +8,92 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 p-6 font-sans">
+
 <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow">
+
     <h1 class="text-2xl font-bold mb-4">📚 Πληροφορίες Περατωμένης Διπλωματικής</h1>
 
-    <div class="space-y-3">
-        <p><span class="font-semibold">Κατάσταση:</span> Περατωμένη</p>
-        <p><span class="font-semibold">Ημερομηνία Ολοκλήρωσης:</span> 20/06/2025</p>
-        <p><span class="font-semibold">Πρακτικό Εξέτασης:</span></p>
-        <div class="bg-gray-100 p-4 rounded">
-            <p>Η τριμελής επιτροπή βαθμολόγησε την εργασία με συνολικό βαθμό 9.0.</p>
-            <p>Παρουσίαση πραγματοποιήθηκε διαδικτυακά.</p>
-        </div>
-        <p><span class="font-semibold">Αποθετήριο (Νημερτής):</span> <a href="#" class="text-blue-600 underline">Προβολή αποθετηρίου</a></p>
+    <!-- Μήνυμα από controller, π.χ. αν δεν υπάρχει completed -->
+    <div th:if="${infoMessage != null}"
+         class="mb-4 p-3 bg-yellow-50 text-yellow-800 rounded border border-yellow-200">
+        <span th:text="${infoMessage}">Ενημερωτικό μήνυμα</span>
     </div>
 
-    <a href="foititis_main.html" class="inline-block mt-6 text-blue-600">🔙 Επιστροφή</a>
+    <!-- Περιεχόμενο όταν υπάρχει thesis -->
+    <div class="space-y-4" th:if="${thesis != null}">
+
+        <!-- Τίτλος / σύνοψη θέματος (αν υπάρχουν) -->
+        <div th:if="${thesis.topic != null}">
+            <p class="text-lg font-semibold" th:text="${thesis.topic.title}">Τίτλος Θέματος</p>
+            <p class="text-gray-600" th:if="${thesis.topic.summary != null}"
+               th:text="${thesis.topic.summary}">Σύνοψη θέματος</p>
+        </div>
+
+        <!-- Βασικές πληροφορίες -->
+        <div class="space-y-2">
+            <p>
+                <span class="font-semibold">Κατάσταση:</span>
+                <span th:text="${thesis.status}">completed</span>
+            </p>
+
+            <p th:if="${thesis.assignmentDate != null}">
+                <span class="font-semibold">Ημερομηνία Ανάθεσης/Ολοκλήρωσης:</span>
+                <span th:text="${#temporals.format(thesis.assignmentDate, 'dd/MM/yyyy')}">20/06/2025</span>
+            </p>
+
+            <p th:if="${thesis.gsProtocolNumber != null}">
+                <span class="font-semibold">Αρ. Πρωτ. Γραμματείας:</span>
+                <span th:text="${thesis.gsProtocolNumber}">12345</span>
+                <span th:if="${thesis.gsProtocolYear != null}"
+                      th:text="' / ' + ${thesis.gsProtocolYear}"> / 2025</span>
+            </p>
+        </div>
+
+        <!-- Πρακτικό / Επιτροπή -->
+        <div>
+            <p class="font-semibold mb-2">Πρακτικό Εξέτασης:</p>
+
+            <div class="bg-gray-100 p-4 rounded space-y-2">
+                <!-- Συνολικός βαθμός (μόνο αν τον περάσουμε από controller ως avgGrade) -->
+                <p th:if="${avgGrade != null}">
+                    Συνολικός βαθμός: <span th:text="${#numbers.formatDecimal(avgGrade, 1, 2)}">9.00</span>
+                </p>
+
+                <!-- Μέλη επιτροπής -->
+                <div th:if="${thesis.committeeMembers != null and #lists.size(thesis.committeeMembers) > 0}">
+                    <p class="font-semibold">Μέλη Επιτροπής:</p>
+                    <ul class="list-disc list-inside">
+                        <li th:each="m : ${thesis.committeeMembers}">
+                            <span th:text="${m.name}">Όνομα</span>
+                            <span th:if="${m.role != null}" th:text="' - ' + ${m.role}"> - Ρόλος</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Αποθετήριο -->
+        <p>
+            <span class="font-semibold">Αποθετήριο (Νημερτής):</span>
+            <a th:if="${thesis.repositoryLink != null}"
+               th:href="${thesis.repositoryLink}"
+               class="text-blue-600 underline" target="_blank" rel="noopener noreferrer">
+                Προβολή αποθετηρίου
+            </a>
+            <span th:if="${thesis.repositoryLink == null}" class="text-gray-500">—</span>
+        </p>
+    </div>
+
+    <!-- Fallback όταν δεν υπάρχει thesis -->
+    <div th:if="${thesis == null}" class="bg-gray-50 p-4 rounded border border-gray-200">
+        <h2 class="text-xl font-bold mb-2">Δεν βρέθηκαν δεδομένα διπλωματικής</h2>
+        <p class="text-gray-600">Επιστρέψτε στην αρχική σελίδα και δοκιμάστε ξανά.</p>
+    </div>
+
+    <!-- Back link -->
+    <a th:href="@{/foithths/foithths}" class="inline-block mt-6 text-blue-600">🔙 Επιστροφή</a>
+
 </div>
+
 </body>
 </html>
