@@ -49,8 +49,8 @@ public class HomeController {
         return "didaskon/diacheirisi";
     }
 
-    @GetMapping("/foithths")
-    public String foithths() {
-        return "foithths/foithths";
-    }
+    // @GetMapping("/foithths")
+    // public String foithths() {
+    // return "foithths/foithths";
+    // }
 }
